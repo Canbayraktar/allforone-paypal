@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Paypal Item",
+  "type" : "object",
+  "properties":
+  {
+  	"clientId":
+    {
+      "type":"string"
+    },
+    "clientSecretId":
+    {
+      "type":"string"
+    },
+    "mode":
+    {
+      "type":"string"
+    },
+    "currency":
+    {
+      "type":"string"
+    },
+    "totalAmount":
+    {
+      "type":"number"
+    },
+    "successUrl":
+    {
+      "type":"string"
+    },
+    "cancelUrl":
+    {
+      "type":"string"
+    },
+    "redirectUrl":
+    {
+      "type":"string"
+    }
+  }
+}

@@ -9,12 +9,12 @@
 # http://docs.cloudfoundry.org/devguide/deploy-apps/manifest.html
 ---
 applications:
-- name: allforone-paypal
+- name: a41paypal
   instances: 1
   memory: 512M
-  host: allforone-paypal
+  host: a41paypal
   path: target/allforone-paypal.war
   env:
     # used in logging format and API Console
-    APP_NAME: allforone-paypal
+    APP_NAME: a41paypal
     APP_VERSION: 1.0-SNAPSHOT

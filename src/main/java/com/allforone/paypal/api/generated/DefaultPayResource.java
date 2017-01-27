@@ -10,6 +10,7 @@ import javax.ws.rs.core.Response.Status;
 
 import org.springframework.stereotype.Component;
 
+import com.allforone.paypal.config.ClientCache;
 import com.allforone.paypal.config.ClientConfiguration;
 import com.allforone.paypal.service.PaypalService;
 import com.paypal.api.payments.Links;
@@ -48,4 +49,25 @@ public class DefaultPayResource implements com.allforone.paypal.api.generated.Pa
 		}
 		return Response.ok(paypalData, "application/json").status(Status.OK).build();
 	}
+
+	/* (non-Javadoc)
+	 * @see com.allforone.paypal.api.generated.PayResource#getPaymentIdByPaymentIdPayerIdByPayerIdClientByClientId(com.allforone.paypal.api.generated.YaasAwareParameters, java.lang.String, java.lang.String, java.lang.String)
+	 */
+	@Override
+	public Response getPaymentIdByPaymentIdPayerIdByPayerIdClientByClientId(YaasAwareParameters yaasAware,
+			String paymentId, String payerId, String clientId) {
+		Payment payment = null;
+		try {
+			payment = paypalService.executePayment(paymentId, payerId, ClientCache.get(clientId));
+			if(payment.getState().equals("approved")){
+				return Response.ok("approved").status(Status.OK).build();
+			}
+		} catch (PayPalRESTException e) {
+			e.printStackTrace();
+			return Response.serverError().build();
+		}
+
+		return Response.ok(payment.getState()).status(Status.OK).build();
+	}
+	
 }

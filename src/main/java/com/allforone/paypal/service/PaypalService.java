@@ -60,16 +60,19 @@ public class PaypalService {
 		return payment.create(clientConfig.getApiContext());
 	}
 	
-	public Payment executePayment(final String paymentId, final String payerId, final  APIContext apiContext) throws PayPalRESTException{
-		Payment payment = new Payment();
-		payment.setId(paymentId);
-		PaymentExecution paymentExecute = new PaymentExecution();
-		paymentExecute.setPayerId(payerId);
-		return payment.execute(apiContext, paymentExecute);
+	public Payment executePayment(final String paymentId, final String payerId, final ClientConfiguration clientConfiguration) throws PayPalRESTException{
+		if(clientConfiguration != null){
+			Payment payment = new Payment();
+			payment.setId(paymentId);
+			PaymentExecution paymentExecute = new PaymentExecution();
+			paymentExecute.setPayerId(payerId);
+			return payment.execute(clientConfiguration.getApiContext(), paymentExecute);
+		}
+		return null;
 	}
 	
 	public ClientConfiguration prepareConfiguration(final PaypalData paypalData){
-		ClientConfiguration clientConfiguration = ClientCache.get(paypalData.getClientId());
+		ClientConfiguration clientConfiguration;// = ClientCache.get(paypalData.getClientId());
 //		if(clientConfiguration == null){
 			clientConfiguration = new ClientConfiguration();
 			clientConfiguration.setClientId(paypalData.getClientId());
@@ -89,7 +92,7 @@ public class PaypalService {
 			clientConfiguration.setMethod(PaypalPaymentMethod.paypal);
 			clientConfiguration.setSuccessUrl(paypalData.getSuccessUrl());
 			clientConfiguration.setCancelUrl(paypalData.getCancelUrl());
-//			ClientCache.put(paypalData.getClientId(), clientConfiguration);
+			ClientCache.put(paypalData.getClientId(), clientConfiguration);
 //		}
 		
 		return clientConfiguration;
