@@ -18,6 +18,41 @@ public final class DefaultPayResourceTest extends com.allforone.paypal.api.gener
 	private static final String ROOT_RESOURCE_PATH = "/pay";
 
 	/* post(entity) /pay */
+	/*@Test
+	public void testPostWithPaypalDatax()
+	{
+		final WebTarget target = getRootTarget(ROOT_RESOURCE_PATH).path("");
+		final PaypalData entityBody =
+		new PaypalData();
+		final javax.ws.rs.client.Entity<PaypalData> entity =
+		javax.ws.rs.client.Entity.entity(entityBody,"application/json");
+
+		final Response response = target.request().post(entity);
+
+		Assert.assertNotNull("Response must not be null", response);
+		Assert.assertEquals("Response does not have expected response code", Status.CREATED.getStatusCode(), response.getStatus());
+	}*/
+
+	/* get() /pay/paymentId/paymentId/payerId/payerId/client/clientId */
+	/*@Test
+	public void testGetPaymentIdByPaymentIdPayerIdByPayerIdClientByClientId()
+	{
+		final WebTarget target = getRootTarget(ROOT_RESOURCE_PATH).path("/paymentId/paymentId/payerId/payerId/client/clientId");
+
+		final Response response = target.request().get();
+
+		Assert.assertNotNull("Response must not be null", response);
+		Assert.assertEquals("Response does not have expected response code", Status.OK.getStatusCode(), response.getStatus());
+	}*/
+
+	@Override
+	protected ResourceConfig configureApplication()
+	{
+		final ResourceConfig application = new ResourceConfig();
+		application.register(DefaultPayResource.class);
+		return application;
+	}
+	
 	@Test
 	public void testPostWithPaypalData()
 	{
@@ -45,13 +80,5 @@ public final class DefaultPayResourceTest extends com.allforone.paypal.api.gener
 
 		Assert.assertNotNull("Response must not be null", response);
 		Assert.assertEquals("Response does not have expected response code", Status.CREATED.getStatusCode(), response.getStatus());
-	}
-
-	@Override
-	protected ResourceConfig configureApplication()
-	{
-		final ResourceConfig application = new ResourceConfig();
-		application.register(DefaultPayResource.class);
-		return application;
 	}
 }
